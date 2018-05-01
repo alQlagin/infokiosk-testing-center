@@ -10,7 +10,7 @@ export class ApiClientService {
   }
 
   createVisit(passport) {
-    return this.http.post(`${environment.apiUrl}/visit/passport`, passport)
+    return this.http.post(`${environment.apiUrl}/visit/passport`, {params: passport})
       .pipe(
         pluck('object')
       );
