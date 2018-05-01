@@ -1,0 +1,22 @@
+<h1>{{Texts.getTalon | translate:language}}</h1>
+<table class="table">
+  <tr>
+    <td>{{Texts.first_name | translate:language}}</td>
+    <td>{{passport.first_name }}</td>
+  </tr>
+  <tr>
+    <td>{{Texts.last_name | translate:language}}</td>
+    <td>{{passport.last_name }}</td>
+  </tr>
+  <tr>
+    <td>{{Texts.passport_series | translate:language}}</td>
+    <td>{{passport.series }}</td>
+  </tr>
+  <tr>
+    <td>{{Texts.number | translate:language}}</td>
+    <td>{{passport.id}}</td>
+  </tr>
+</table>
+<div class="text-center">
+  <button class="btn btn-primary" (click)="onClose()">{{Texts.cancel | translate:language}}</button>
+</div>

@@ -4,5 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://353561ba-47e9-46d7-ba3e-a177be9c429e.mock.pstmn.io'
 };
