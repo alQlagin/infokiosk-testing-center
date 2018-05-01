@@ -39,7 +39,7 @@ export class PassportFormComponent implements OnInit, OnDestroy {
         passport.forEach(({field, value}) => {
           switch (field) {
             case RegulaFields.DateofBirth:
-              this.passportForm.patchValue({date_of_birth: value});
+              this.passportForm.patchValue({date_of_birth: value.split('.').reverse().join('-')});
               break;
             case RegulaFields.DocumentNumber:
               this.passportForm.patchValue({passport_series: value});
