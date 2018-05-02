@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RegulaFields} from '../regula/regula.fields';
 import {filter, throttleTime} from 'rxjs/operators';
@@ -12,7 +12,7 @@ import {PassportFormTranslations} from './passport-form-translations.enum';
   templateUrl: './passport-form.component.html',
   styleUrls: ['./passport-form.component.scss']
 })
-export class PassportFormComponent implements OnInit, OnDestroy {
+export class PassportFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() language: Languages = Languages.RU;
   @Output() submit = new EventEmitter();
   @Output() cancel = new EventEmitter();
@@ -22,12 +22,20 @@ export class PassportFormComponent implements OnInit, OnDestroy {
     last_name: ['', Validators.required],
     date_of_birth: ['', Validators.required]
   });
+  @ViewChild('video') video: ElementRef;
+  scanned = false;
   readonly Texts = PassportFormTranslations;
   private sub: Subscription;
 
   constructor(private readonly fb: FormBuilder, private regula: Regula) {
 
   }
+
+  ngAfterViewInit() {
+    this.video.nativeElement.webkitEnterFullscreen();
+    this.video.nativeElement.play();
+  }
+
 
   ngOnInit() {
     this.sub = this.regula.connect()
@@ -54,6 +62,7 @@ export class PassportFormComponent implements OnInit, OnDestroy {
               return null;
           }
         });
+        this.scanned = true;
       });
   }
 

@@ -1,7 +1,7 @@
 <h1 class="display-4">{{Texts.welcome | translate: language}}</h1>
 <p class="lead">{{Texts.instruction1 | translate: language}}<br>{{Texts.instruction2 | translate: language}}</p>
-
-<form [formGroup]="passportForm" (ngSubmit)="onSubmit()">
+<video #video *ngIf="!scanned" src="./assets/videoplayback.mp4" loop [muted]='true'></video>
+<form [formGroup]="passportForm" (ngSubmit)="onSubmit()" *ngIf="scanned">
   <div class="form-group">
     <label>{{Texts.first_name | translate: language}}</label>
     <input type="text" class="form-control" formControlName="first_name">
