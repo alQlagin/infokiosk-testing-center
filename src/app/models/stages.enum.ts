@@ -1,5 +1,6 @@
 export enum StagesEnum {
   SELECT_LANGUAGE,
+  VIDEO_INSTRUCTION,
   SCAN_PASSPORT,
   VIEW_NUMBER
 }

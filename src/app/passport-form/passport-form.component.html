@@ -1,5 +1,4 @@
-<video #video *ngIf="!scanned" src="./assets/videoplayback.mp4" loop [muted]='true'></video>
-<div class="row" *ngIf="scanned">
+<div class="row">
   <div class="text-center col-12">
     <h1 class="display-4">{{Texts.welcome | translate: language}}</h1>
     <p class="lead">{{Texts.instruction1 | translate: language}}<br>{{Texts.instruction2 | translate: language}}</p>

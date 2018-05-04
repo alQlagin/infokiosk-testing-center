@@ -1,8 +1,8 @@
 <div class="container">
   <ng-container [ngSwitch]="stage">
-    <app-language-selector *ngSwitchCase="STAGES.SELECT_LANGUAGE"
-                           (select)="onLanguageSelect($event)"></app-language-selector>
+    <app-video-instruction *ngSwitchCase="STAGES.VIDEO_INSTRUCTION"></app-video-instruction>
     <app-passport-form [language]="language"
+                       [data]="regulaData"
                        *ngSwitchCase="STAGES.SCAN_PASSPORT"
                        (submit)="onPassportReady($event)"
                        (cancel)="onPassportCancel($event)"

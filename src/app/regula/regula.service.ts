@@ -1,5 +1,12 @@
 import {Injectable} from '@angular/core';
-import {CheckReaderResultXML, getFromEnum, initRegulaReader, IsReaderResultTypeAvailable, RestartSdk} from './regula.sdk.apiClient';
+import {
+  CheckReaderResultXML,
+  ClearResults,
+  getFromEnum,
+  initRegulaReader,
+  IsReaderResultTypeAvailable,
+  RestartSdk
+} from './regula.sdk.apiClient';
 import {eRPRM_ResultType, eVisualFieldTypeStrings, systemNotificationCodes} from './regula.sdk.enums';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {bindCallback} from 'rxjs/observable/bindCallback';
@@ -28,6 +35,11 @@ export class Regula {
 
   restartSdk() {
     return RestartSdkAsObservable();
+  }
+
+  reset() {
+    ClearResults(() => console.log('cleared'));
+    this.stream$.next(null);
   }
 
   private OnSystemNotificationCallback(systemNotificationCode) {
@@ -70,6 +82,7 @@ export class Regula {
       ).replace(/^str/, '');
       result.push({field: fieldType, value: $(element).children('Field_MRZ')[0].textContent});
     });
+    console.log(result);
     this.stream$.next(result);
   }
 
