@@ -1,25 +1,33 @@
-<h1 class="display-4">{{Texts.welcome | translate: language}}</h1>
-<p class="lead">{{Texts.instruction1 | translate: language}}<br>{{Texts.instruction2 | translate: language}}</p>
 <video #video *ngIf="!scanned" src="./assets/videoplayback.mp4" loop [muted]='true'></video>
-<form [formGroup]="passportForm" (ngSubmit)="onSubmit()" *ngIf="scanned">
-  <div class="form-group">
-    <label>{{Texts.first_name | translate: language}}</label>
-    <input type="text" class="form-control" formControlName="first_name">
+<div class="row" *ngIf="scanned">
+  <div class="text-center col-12">
+    <h1 class="display-4">{{Texts.welcome | translate: language}}</h1>
+    <p class="lead">{{Texts.instruction1 | translate: language}}<br>{{Texts.instruction2 | translate: language}}</p>
   </div>
-  <div class="form-group">
-    <label>{{Texts.last_name | translate: language}}</label>
-    <input type="text" class="form-control" formControlName="last_name">
-  </div>
-  <div class="form-group">
-    <label>{{Texts.passport_series | translate: language}}</label>
-    <input type="text" class="form-control" formControlName="passport_series">
-  </div>
-  <div class="form-group">
-    <label>{{Texts.date_of_birth | translate: language}}</label>
-    <input type="text" class="form-control" formControlName="date_of_birth">
-  </div>
-  <div class="text-center">
-    <button class="btn btn-secondary" type="button" (click)="onCancel()" >{{Texts.cancel | translate: language}}</button>
-    <button class="btn btn-primary" [disabled]="passportForm.invalid">{{Texts.next | translate: language}}</button>
-  </div>
-</form>
+  <form [formGroup]="passportForm" (ngSubmit)="onSubmit()" class="col-md-6 offset-md-3 col-12">
+    <div class="form-group">
+      <!--<label>{{Texts.first_name | translate: language}}</label>-->
+      <input type="text" class="form-control form-control-lg" formControlName="first_name">
+    </div>
+    <div class="form-group">
+      <!--<label>{{Texts.last_name | translate: language}}</label>-->
+      <input type="text" class="form-control form-control-lg" formControlName="last_name">
+    </div>
+    <div class="form-group">
+      <!--<label>{{Texts.passport_series | translate: language}}</label>-->
+      <input type="text" class="form-control form-control-lg" formControlName="passport_series">
+    </div>
+    <div class="form-group">
+      <!--<label>{{Texts.date_of_birth | translate: language}}</label>-->
+      <input type="text" class="form-control form-control-lg" formControlName="date_of_birth">
+    </div>
+    <div class="text-center">
+      <button class="btn btn-lg btn-secondary float-left" type="button" (click)="onCancel()">{{Texts.cancel | translate:
+        language}}
+      </button>
+      <button class="btn btn-lg btn-primary float-right" [disabled]="passportForm.invalid">{{Texts.next | translate:
+        language}}
+      </button>
+    </div>
+  </form>
+</div>
