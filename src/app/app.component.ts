@@ -21,6 +21,7 @@ export class AppComponent {
   constructor(private readonly api: ApiClientService, private regula: Regula, private cd: ChangeDetectorRef) {
     this.regula.connect()
       .pipe(
+        filter(() => (this.stage !== StagesEnum.VIEW_NUMBER)),
         map(data => data && data.filter(item => Object.values(RegulaFields).includes(item.field))),
         filter((v) => !!(v && v.length)),
         tap(v => {
