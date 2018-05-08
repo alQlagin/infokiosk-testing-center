@@ -17,6 +17,7 @@ export class ViewResultComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => this.onClose(), 3000);
   }
 
   onClose() {
