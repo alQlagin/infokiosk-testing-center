@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {PassportFormTranslations} from '../passport-form/passport-form-translations.enum';
 
 @Component({
   selector: 'app-video-instruction',
@@ -8,12 +9,15 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 export class VideoInstructionComponent implements AfterViewInit {
 
   @ViewChild('video') video: ElementRef;
+  readonly Texts = PassportFormTranslations;
 
   constructor() {
   }
 
   ngAfterViewInit() {
-    this.video.nativeElement.webkitEnterFullscreen();
-    this.video.nativeElement.play();
+    if (this.video && this.video.nativeElement) {
+      this.video.nativeElement.webkitEnterFullscreen();
+      this.video.nativeElement.play();
+    }
   }
 }
