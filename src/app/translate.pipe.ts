@@ -6,7 +6,7 @@ import {Languages} from './models/Languages';
 })
 export class TranslatePipe implements PipeTransform {
 
-  transform(value: any, language: Languages): any {
+  transform(value: any, language: Languages = Languages.RU): any {
     const l = translations[language];
     return l && l[value] || value;
   }
