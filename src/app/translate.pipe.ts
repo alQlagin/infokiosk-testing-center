@@ -23,7 +23,7 @@ translations[Languages.RU] = {
   passport_series: 'Серия и номер паспорта',
   date_of_birth: 'Дата рождения',
   next: 'Дальше',
-  cancel: 'Закрыть',
+  cancel: 'Назад',
   number: 'Номер в очереди',
   getTalon: 'Возьмите ваш талон'
 };
@@ -37,7 +37,7 @@ translations[Languages.UZ] = {
   passport_series: 'Серия и номер паспорта',
   date_of_birth: 'Дата рождения',
   next: 'Дальше',
-  cancel: 'Закрыть',
+  cancel: 'Назад',
   number: 'Номер в очереди',
   getTalon: 'Возьмите ваш талон'
 };
