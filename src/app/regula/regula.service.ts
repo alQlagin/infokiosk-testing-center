@@ -10,19 +10,20 @@ import {
 import {eRPRM_ResultType, eVisualFieldTypeStrings, systemNotificationCodes} from './regula.sdk.enums';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {bindCallback} from 'rxjs/observable/bindCallback';
+import {RegulaConnector} from './regula-connector';
+import {RegulaFields} from './regula.fields';
 
 const $ = (window as any).jQuery;
 
 const RestartSdkAsObservable = bindCallback(RestartSdk);
 
 @Injectable()
-export class Regula {
+export class Regula implements RegulaConnector {
   private connected = false;
-  private readonly stream$ = new BehaviorSubject<Array<{ field, value }>>(null);
+  private readonly stream$ = new BehaviorSubject<Array<{ field: RegulaFields, value: string }>>(null);
 
 
   connect() {
-
     if (!this.connected) {
       initRegulaReader('https://localhost:443/Regula.SDK.Api', false, {
         OnProcessingFinishedCallback: () => this.OnProcessingFinishedCallback(),

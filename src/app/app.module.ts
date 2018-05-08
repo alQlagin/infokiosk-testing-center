@@ -12,7 +12,9 @@ import { LanguageSelectorComponent } from './language-selector/language-selector
 import { TranslatePipe } from './translate.pipe';
 import { ViewResultComponent } from './view-result/view-result.component';
 import {ApiClientService} from './api-client.service';
-import { VideoInstructionComponent } from './video-instruction/video-instruction.component';
+import {VideoInstructionComponent} from './video-instruction/video-instruction.component';
+import {RegulaMock} from './regula/regula-mock.service';
+import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -30,7 +32,7 @@ import { VideoInstructionComponent } from './video-instruction/video-instruction
     HttpClientModule
   ],
   providers: [
-    Regula,
+    {provide: Regula, useClass: environment.production ? Regula : RegulaMock},
     ApiClientService,
     {provide: HTTP_INTERCEPTORS, useClass: JSONRPCResponseInterceptor, multi: true}
   ],
