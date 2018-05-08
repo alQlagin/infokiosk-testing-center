@@ -14,25 +14,44 @@ import {RegulaFields} from './regula/regula.fields';
 export class AppComponent {
   readonly STAGES = StagesEnum;
   passport: any;
-  stage: StagesEnum = StagesEnum.SCAN_PASSPORT;
+  stage: StagesEnum = StagesEnum.VIDEO_INSTRUCTION;
   language: Languages = Languages.RU;
   regulaData;
+  error: string;
 
   constructor(private readonly api: ApiClientService, private regula: Regula, private cd: ChangeDetectorRef) {
     this.regula.connect()
       .pipe(
-        filter(() => (this.stage !== StagesEnum.VIEW_NUMBER)),
+        filter(() => (this.stage !== StagesEnum.VIEW_NUMBER) && !this.error),
         map(data => data && data.filter(item => Object.values(RegulaFields).includes(item.field))),
         filter((v) => !!(v && v.length)),
         tap(v => {
-          this.stage = StagesEnum.SCAN_PASSPORT;
-          console.log(v);
+          // this.stage = StagesEnum.SCAN_PASSPORT;
         })
-        // throttleTime(2000),
         // filter(passport => !!passport)
       )
       .subscribe((data) => {
         this.regulaData = data;
+        const passport: any = {};
+        data.forEach(({field, value}) => {
+          switch (field) {
+            case RegulaFields.DateofBirth:
+              passport.date_of_birth = value.split('.').reverse().join('-');
+              break;
+            case RegulaFields.DocumentNumber:
+              passport.passport_series = value;
+              break;
+            case RegulaFields.GivenNames:
+              passport.first_name = value;
+              break;
+            case RegulaFields.Surname:
+              passport.last_name = value;
+              break;
+            default:
+              return null;
+          }
+        });
+        this.onPassportReady(passport);
         cd.detectChanges();
       });
   }
@@ -43,12 +62,28 @@ export class AppComponent {
   }
 
   onPassportReady(data) {
+    this.error = null;
     this.api.createVisit(data)
-      .subscribe((passport) => {
-        this.passport = passport;
-        this.stage = StagesEnum.VIEW_NUMBER;
-        this.cd.detectChanges();
-      });
+      .subscribe(
+        passport => {
+          this.passport = passport;
+          this.stage = StagesEnum.VIEW_NUMBER;
+          this.cd.detectChanges();
+        },
+        response => {
+          switch (response.error) {
+            case 'Passport has already passed today. Number: 1':
+              this.error = 'Вы уже получали сегодня талон';
+              break;
+          }
+
+          this.cd.detectChanges();
+          setTimeout(() => {
+            this.error = null;
+            this.cd.detectChanges();
+          }, 2000);
+        }
+      );
   }
 
   onPassportCancel() {
