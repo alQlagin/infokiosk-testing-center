@@ -13,8 +13,8 @@ import {RegulaFields} from './regula/regula.fields';
 })
 export class AppComponent {
   readonly STAGES = StagesEnum;
-  passport: any;
   stage: StagesEnum = StagesEnum.VIDEO_INSTRUCTION;
+  passport: any;
   language: Languages = Languages.RU;
   regulaData;
   error: string;
@@ -74,6 +74,9 @@ export class AppComponent {
           switch (response.error) {
             case 'Passport has already passed today. Number: 1':
               this.error = 'Вы уже получали сегодня талон';
+              break;
+            case 'Queue limit exceeded':
+              this.error = 'Лимит номеров на сегодня исчерпан';
               break;
           }
 
